@@ -25,7 +25,7 @@ const colors = {
   }
 };
 
-function generateHTML(data, res) {
+function generateHTML(data, res, stars) {
 
   var locationStr = getLocationParameterStr(res.data.location);
   return `<!DOCTYPE html>
@@ -203,6 +203,26 @@ function generateHTML(data, res) {
           <div class="row" style="margin-top:30px;">
             <div class="col">
               <h5>${res.data.bio}</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col card">
+              <h4>Public Repositories</h4>
+              <h4>${res.data.public_repos}</h4>
+            </div>
+            <div class="col card">
+              <h4>Followers</h4>
+              <h4>${res.data.followers}</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col card">
+              <h4>Github Stars</h4>
+              <h4>${stars}</h4>
+            </div>
+            <div class="col card">
+              <h4>Following</h4>
+              <h4>${res.data.following}</h4>
             </div>
           </div>
         </div>
