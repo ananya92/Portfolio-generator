@@ -172,6 +172,13 @@ function generateHTML(data, res) {
           }
       </style>
     </head>
+    <body>
+      <div class="wrapper">
+        <div class="photo-header">
+          <img src=${res.data.avatar_url}>
+        </div>
+      </div>
+    </body>
   </html>`
 }
 
