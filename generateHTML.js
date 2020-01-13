@@ -169,9 +169,14 @@ function generateHTML(data, res, stars) {
           }
   
           @media print { 
-          body { 
-            zoom: .75; 
-          } 
+            body { 
+              zoom: .75; 
+            } 
+          }
+          footer {
+            background-color: ${colors[data.color].wrapperBackground};
+            height: 150px;
+            margin: 0 -100px -50px -100px;
           }
       </style>
     </head>
@@ -192,7 +197,7 @@ function generateHTML(data, res, stars) {
               <a href="https://www.google.com/maps/search/?api=1&query=${locationStr}"><i class="fas fa-location-arrow"></i> ${res.data.location}</a>
             </div>
             <div class="col">
-              <a href=${res.data.url}><i class="fab fa-github-alt"></i> Github</a>
+              <a href="https://github.com/${res.data.login}"><i class="fab fa-github-alt"></i> Github</a>
             </div>
             <div class="col">
               <a href=${res.data.blog}><i class="fas fa-rss"></i> Blog</a>
@@ -226,6 +231,8 @@ function generateHTML(data, res, stars) {
             </div>
           </div>
         </div>
+        <footer>
+        </footer>
       </div>
     </div>
   </body>
