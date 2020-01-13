@@ -26,6 +26,7 @@ const colors = {
 };
 
 function generateHTML(data, res) {
+
   return `<!DOCTYPE html>
   <html lang="en">
     <head>
@@ -141,7 +142,7 @@ function generateHTML(data, res) {
           .row {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
             margin-top: 20px;
             margin-bottom: 20px;
           }
@@ -155,7 +156,7 @@ function generateHTML(data, res) {
           }
           
           .col {
-          flex: 1;
+          flex: 3;
           text-align: center;
           }
   
@@ -163,6 +164,7 @@ function generateHTML(data, res) {
           text-decoration: none;
           color: inherit;
           font-weight: bold;
+          display: block;
           }
   
           @media print { 
@@ -173,13 +175,21 @@ function generateHTML(data, res) {
       </style>
     </head>
     <body>
-      <div class="wrapper">
+    <div class="wrapper">
+      <div class="container">
         <div class="photo-header">
           <img src=${res.data.avatar_url}>
+          <div class="row">
+            <div class="col">
+              <h1>Hi!</h1>
+              <h1>My name is ${res.data.name}!</h1>
+              <h6>Currently @ ${res.data.company}</h6>
+            </div>
+          </div>
         </div>
       </div>
-    </body>
+    </div>
+  </body>
   </html>`
 }
 
-module.exports.generateHTML = generateHTML;
