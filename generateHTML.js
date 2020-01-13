@@ -199,6 +199,13 @@ function generateHTML(data, res) {
             </div>
           </div>
         </div>
+        <div class="container">
+          <div class="row" style="margin-top:30px;">
+            <div class="col">
+              <h5>${res.data.bio}</h5>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
