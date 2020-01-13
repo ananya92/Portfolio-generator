@@ -25,6 +25,11 @@ inquirer.prompt(
             ]
         }
     ]).then(function(data) {
+        const queryUrl = `https://api.github.com/users/${data.github}`;
 
+        axios.get(queryUrl).then(function(res) {
+            console.log(res.data);
+            const portfolioHTMLStr = generateHTML.generateHTML(data, res);
+        });
     });
 
