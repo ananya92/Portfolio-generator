@@ -27,6 +27,7 @@ const colors = {
 
 function generateHTML(data, res) {
 
+  var locationStr = getLocationParameterStr(res.data.location);
   return `<!DOCTYPE html>
   <html lang="en">
     <head>
@@ -186,6 +187,17 @@ function generateHTML(data, res) {
               <h6>Currently @ ${res.data.company}</h6>
             </div>
           </div>
+          <div class="row" style="width:100%">
+            <div class="col">
+              <a href="https://www.google.com/maps/search/?api=1&query=${locationStr}"><i class="fas fa-location-arrow"></i> ${res.data.location}</a>
+            </div>
+            <div class="col">
+              <a href=${res.data.url}><i class="fab fa-github-alt"></i> Github</a>
+            </div>
+            <div class="col">
+              <a href=${res.data.blog}><i class="fas fa-rss"></i> Blog</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -193,3 +205,22 @@ function generateHTML(data, res) {
   </html>`
 }
 
+//Function to construct the location parameter for google map
+// Example: "City Hall, New York, NY" should be converted to City+Hall%2C+New+York%2C+NY
+function getLocationParameterStr(locationStr) {
+  var arr = locationStr.split("");
+  var newArr = [];
+  for(const val of arr) {
+    if(val === " ") {
+      newArr.push("+");
+    }
+    else if(val === ",") {
+      newArr.push("%2C");
+    }
+    else {
+      newArr.push(val);
+    }
+  }
+  return newArr.join("");
+}
+module.exports.generateHTML = generateHTML;
