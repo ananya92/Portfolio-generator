@@ -30,6 +30,16 @@ inquirer.prompt(
         axios.get(queryUrl).then(function(res) {
             console.log(res.data);
             const portfolioHTMLStr = generateHTML.generateHTML(data, res);
+            var filename = data.github + ".html";
+            writeToFile(filename, portfolioHTMLStr);
         });
     });
 
+    function writeToFile(fName, data) {
+        fs.writeFile(fName, data, function(err) {
+            if (err) {
+            return console.log(err);
+            }
+            console.log("Success!");
+        });
+    }
