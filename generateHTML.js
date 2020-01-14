@@ -136,8 +136,8 @@ function generateHTML(data, res, stars) {
           }
           .container {
           padding: 50px;
-          padding-left: 100px;
-          padding-right: 100px;
+          padding-left: 30px;
+          padding-right: 30px;
           }
   
           .row {
