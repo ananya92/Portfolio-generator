@@ -75,8 +75,11 @@ function writeToFile(username, fName, data) {
         try {
             const pdf = await printPdf();
             let buildPathPdf = getPdfPath();
-          
+            const buildPathHTML = path.resolve(`./${fName}`);
+            //Generating the portfolio PDF
             fs.writeFileSync(buildPathPdf, pdf);
+            //Deleting the HTML file used for generating the PDF
+            fs.unlinkSync(buildPathHTML);
             console.log('Succesfully generated PDF');
         } catch (error) {
             console.log('Error generating PDF', error);
