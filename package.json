@@ -1,0 +1,24 @@
+{
+  "name": "portfolio-generator",
+  "version": "1.0.0",
+  "description": "Command line tool to generate user's portfolio as PDF file by taking github ID as user input",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ananya92/Portfolio-generator.git"
+  },
+  "author": "Ananya Pramanik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ananya92/Portfolio-generator/issues"
+  },
+  "homepage": "https://github.com/ananya92/Portfolio-generator#readme",
+  "dependencies": {
+    "axios": "^0.19.1",
+    "inquirer": "^6.5.0",
+    "puppeteer": "^2.0.0"
+  }
+}
