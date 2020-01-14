@@ -1,6 +1,9 @@
 var inquirer = require("inquirer");
 var fs = require("fs");
 const axios = require("axios");
+const puppeteer = require('puppeteer');
+const path = require('path');
+
 var generateHTML = require("./generateHTML");
 
 var queryURL = `https://www.google.com/maps/search/?api=1&query=`;
@@ -31,16 +34,53 @@ inquirer.prompt(
             axios.get(`https://api.github.com/users/${res.data.login}/starred`).then(function(starsResult) {
                 const portfolioHTMLStr = generateHTML.generateHTML(data, res, starsResult.data.length);
                 var filename = data.github + ".html";
-                writeToFile(filename, portfolioHTMLStr);
+                writeToFile(data.github, filename, portfolioHTMLStr);
             });
         });
     });
 
-    function writeToFile(fName, data) {
-        fs.writeFile(fName, data, function(err) {
-            if (err) {
-            return console.log(err);
+function writeToFile(username, fName, data) {
+        
+    fs.writeFile(fName, data, function(err) {
+        if (err) {
+        return console.log(err);
+        }
+      });
+
+    const printPdf = async () => {
+        const buildPathHTML = path.resolve(`./${fName}`);
+        console.log('Starting: Generating PDF Process, Kindly wait ..');
+        /** Launch a headleass browser */
+        const browser = await puppeteer.launch();
+        /* 1- Ccreate a newPage() object. It is created in default browser context. */
+        const page = await browser.newPage();
+        /* 2- Will open our generated `.html` file in the new Page instance. */
+        await page.goto(buildPathHTML, { waitUntil: 'networkidle0' });
+        /* 3- Take a snapshot of the PDF */
+        const pdf = await page.pdf({
+            format: 'A4',
+            margin: {
+                top: '10px',
+                right: '10px',
+                bottom: '10px',
+                left: '10px'
             }
-            console.log("Success!");
         });
-    }
+        /* 4- Cleanup: close browser. */
+        await browser.close();
+        console.log('Ending: Generating PDF Process');
+        return pdf;
+    };
+    
+    const init = async () => {
+        try {
+            const pdf = await printPdf();
+            const buildPathPdf = path.resolve(`./${username}.pdf`);;
+            fs.writeFileSync(buildPathPdf, pdf);
+            console.log('Succesfully generated PDF');
+        } catch (error) {
+            console.log('Error generating PDF', error);
+        }
+    };
+    init();
+}
