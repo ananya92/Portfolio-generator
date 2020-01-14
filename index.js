@@ -3,7 +3,6 @@ var fs = require("fs");
 const axios = require("axios");
 const puppeteer = require('puppeteer');
 const path = require('path');
-
 var generateHTML = require("./generateHTML");
 
 var queryURL = `https://www.google.com/maps/search/?api=1&query=`;
@@ -75,12 +74,35 @@ function writeToFile(username, fName, data) {
     const init = async () => {
         try {
             const pdf = await printPdf();
-            const buildPathPdf = path.resolve(`./${username}.pdf`);;
+            let buildPathPdf = getPdfPath();
+          
             fs.writeFileSync(buildPathPdf, pdf);
             console.log('Succesfully generated PDF');
         } catch (error) {
             console.log('Error generating PDF', error);
         }
     };
+    //Function to increment the version of the PDF file and save as another file if the person's portfolio already exists
+    function getPdfPath() {
+        let buildPathPdf = path.resolve(`./${username}.pdf`);
+        //Remove the .pdf extension using slice()
+        buildPathPdf = buildPathPdf.slice(0,-4);
+        var count = 1;
+        while(fs.existsSync(buildPathPdf + ".pdf")) {
+            if(count == 1)
+                buildPathPdf += `_${count}`;
+            else if(count < 10) {
+                buildPathPdf = buildPathPdf.slice(0,-2);
+                buildPathPdf += `_${count}`;
+            }
+            else if(count > 9) {
+                buildPathPdf = buildPathPdf.slice(0,-3);
+                buildPathPdf += `_${count}`;
+            }
+            count++;
+        }
+        buildPathPdf += ".pdf";
+        return buildPathPdf;
+    }
     init();
 }
